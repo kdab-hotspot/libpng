@@ -929,3 +929,19 @@ endif()
 # to create msvc import lib for mingw compiled shared lib
 # pexports libpng.dll > libpng.def
 # lib /def:libpng.def /machine:x86
+
+string(TOLOWER ${CMAKE_BUILD_TYPE} BUILD_TYPE)
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/TargetArch.cmake)
+target_architecture(ARCH)
+
+string(TOLOWER ${CMAKE_SYSTEM_PROCESSOR} ARCH)
+string(TOLOWER ${CMAKE_SYSTEM_NAME} OS)
+set(ARCHIVE "${PROJECT_NAME}-${ARCH}-${OS}-${BUILD_TYPE}")
+set(CPACK_PACKAGE_FILE_NAME ${ARCHIVE})
+set(CPACK_GENERATOR "ZIP")
+set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY OFF)
+set(CPACK_OUTPUT_FILE_PREFIX ${CMAKE_INSTALL_PREFIX})
+
+include(CPack)
+
